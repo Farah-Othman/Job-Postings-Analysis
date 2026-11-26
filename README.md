@@ -109,7 +109,3 @@ The dataset provides a practical foundation for:
 
 The results describe patterns in the collected listings; they do not by themselves establish hiring outcomes, salary levels, or causal effects on employment.
 
-
-## Disclaimer
-
-This project is intended for educational and analytical purposes. Wuzzuf is the source of the job listings; this project is not affiliated with or endorsed by Wuzzuf. Respect the website's terms and applicable laws when accessing or processing its content.
