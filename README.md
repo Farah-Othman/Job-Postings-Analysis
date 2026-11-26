@@ -1,10 +1,10 @@
-# Wuzzuf Job Market Analysis | Python Web Scraping, Data Preparation & Power BI
+#  Job Market Analysis 2025 | Python Web Scraping, Data Preparation & Power BI
 
-An end-to-end job-market analytics project built around job listings collected from **Wuzzuf**. The project uses Python to collect job-posting details across multiple career categories, prepares the collected information in Excel, and provides a dataset for exploring hiring patterns, employer demand, locations, career levels, work arrangements, and required skills.
+An end-to-end job-market analytics project built around job listings collected from **Job Posting website**. The project uses Python to collect job-posting details across multiple career categories, prepares the collected information in Excel, and provides a dataset for exploring hiring patterns, employer demand, locations, career levels, work arrangements, and required skills.
 
 The objective is to turn unstructured job-board listings into an analysis-ready dataset that can help job seekers understand where opportunities are concentrated and which skills appear most frequently in employer requirements.
 
-> **Dataset snapshot:** The figures below describe the supplied cleaned workbook, not live Wuzzuf listings. Job-board content changes over time, and the workbook does not include a verified collection date.
+> **Dataset snapshot:** The figures below describe the supplied cleaned workbook, not live listings. Job-board content changes over time, and the workbook does not include a verified collection date.
 
 ## Project impact at a glance
 
@@ -43,11 +43,11 @@ Percentages are calculated against the 8,835 job-posting rows and rounded to one
 
 ## Workflow
 
-1. **Collect:** Python sends HTTP requests to Wuzzuf job-search pages for configured job categories.
+1. **Collect:** Python sends HTTP requests to job-search pages for configured job categories.
 2. **Parse:** BeautifulSoup extracts job titles, job URLs, company names and URLs, locations, job types, career levels, skills, and workplace arrangements.
 3. **Structure:** pandas organizes the extracted information into tabular data.
 4. **Avoid duplicate appends:** The scraper checks existing CSV files and appends only rows whose job URLs are not already present.
-5. **Prepare:** The supplied Excel workbook separates job-level information from the job-to-skill records.
+5. **Prepare:** The Excel workbook separates job-level information from the job-to-skill records.
 6. **Analyze:** The cleaned dataset can be explored in Power BI to identify patterns in job demand and requirements.
 
 ## Technology stack
@@ -57,21 +57,19 @@ Percentages are calculated against the 8,835 job-posting rows and rounded to one
 - **BeautifulSoup** — HTML parsing and field extraction
 - **pandas** — tabular data preparation and CSV/Excel handling
 - **Excel** — cleaned, structured dataset
-- **Power BI** — interactive job-market reporting (`wuzzuf_dashboard.pbix`)
+- **Power BI** — interactive job-market reporting (`jobPosting_dashboard.pbix`)
 
 ## Repository files
 
 | File | Description |
 |---|---|
-| `wuzzuf.py` | Python scraper for Wuzzuf job-search listings |
-| `wuzzuf_data_cleaning.xlsx` | Cleaned workbook containing job-level data and a separate skills table |
-| `wuzzuf_dashboard.pbix` | Power BI dashboard file |
+| `jobPosting.py` | Python scraper for job-search listings |
+| `jobPosting_dashboard.pbix` | Power BI dashboard file |
 
 ## Dataset structure
 
-The Excel workbook contains two sheets:
 
-### `Wuzzuf_data`
+### `jobPosting_data`
 
 One row per job posting, with 8,835 rows and these fields:
 
@@ -99,39 +97,6 @@ A separate job-to-skill table with 54,681 rows and two fields:
 
 The two sheets can be related using `jobs_link`. This structure supports skill-frequency analysis without storing multiple skills in a single job-level cell.
 
-## How to run the scraper
-
-### 1. Install dependencies
-
-```bash
-pip install requests beautifulsoup4 pandas
-```
-
-### 2. Configure the output directory
-
-Open `wuzzuf.py` and update the `file_path` assignment to a directory on your machine. The supplied script currently contains a Windows-specific absolute path, so it must be changed before running on another computer.
-
-### 3. Run
-
-```bash
-python wuzzuf.py
-```
-
-The script iterates through its configured categories, determines the number of result pages, extracts listing information, and writes category-level CSV files. Existing files are read so that postings with URLs already collected are not appended again.
-
-### 4. Open the analysis files
-
-Use `wuzzuf_data_cleaning.xlsx` for the prepared tables and open `wuzzuf_dashboard.pbix` in Power BI Desktop to explore the dashboard.
-
-## Important implementation notes and limitations
-
-- **Website structure can change:** The scraper relies on Wuzzuf HTML element classes. Changes to the website may require updates to the BeautifulSoup selectors.
-- **Pagination assumption:** The script assumes 15 job listings per result page when calculating the number of pages.
-- **Output path:** The output directory is hard-coded and must be configured locally before execution.
-- **Category consistency:** The categories in the supplied cleaned workbook are not an exact match to the category list in the supplied scraper. Reconcile category names and collection scope before attempting to reproduce the workbook from a fresh scrape.
-- **Snapshot, not a live feed:** The Excel figures are a snapshot of the supplied data. They should not be interpreted as current vacancy counts or a complete census of the labor market.
-- **Missing values and labels:** Some workplace values are `Not specified`, and skill labels may include spelling, capitalization, or naming variants. Skill normalization and further validation can improve comparisons.
-- **Responsible collection:** Before running the scraper, review Wuzzuf's current terms, applicable access rules, and `robots.txt`. Use reasonable request rates and do not treat publicly viewable pages as permission to ignore site policies.
 
 ## Potential business value
 
@@ -142,17 +107,8 @@ The dataset provides a practical foundation for:
 - **Recruitment and HR analysis:** comparing job categories, employer activity, and work arrangements within the collected sample.
 - **Market reporting:** monitoring how the composition of collected listings changes when the scraping and cleaning process is rerun consistently over time.
 
-The results describe patterns in the collected Wuzzuf listings; they do not by themselves establish hiring outcomes, salary levels, or causal effects on employment.
+The results describe patterns in the collected listings; they do not by themselves establish hiring outcomes, salary levels, or causal effects on employment.
 
-## Future improvements
-
-- Replace hard-coded paths with command-line arguments or configuration settings.
-- Add request timeouts, retries, status-code checks, and structured logging.
-- Add robust parsing and validation for missing or changed HTML fields.
-- Normalize skill labels and job-category names.
-- Record collection timestamps to enable trend analysis across snapshots.
-- Add automated data-quality checks and reproducible cleaning steps.
-- Capture additional fields, such as salary, only when reliably available and permitted.
 
 ## Disclaimer
 
