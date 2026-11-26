@@ -7,8 +7,8 @@ import urllib.parse
 import math
 import time
 
-# wuzzuf job categories
-wuzzuf_job_categories = [
+#  job categories
+job_categories = [
     "Sales",
     "Retail",
     "IT",
@@ -30,13 +30,13 @@ wuzzuf_job_categories = [
 ]
 
 # loop over each category 
-for job_category in wuzzuf_job_categories:
+for job_category in job_categories:
     #declare lists to save information
     job_titles,jobs_link,companies,companies_links,locations,jobs_type,Career_Level,skills_list,workplaces = [],[],[],[],[],[],[],[],[]
     #edit job category to fit in link
     parse_job_category = urllib.parse.quote(job_category)
     #get no of pages to loop over all jobs
-    url = f"https://wuzzuf.net/search/jobs/?q={parse_job_category}"
+    url = #f"https://jobPosting.net/search/jobs/?q={parse_job_category}"
     response = requests.get(url)
     soup = bs(response.content,'html.parser')
     jobs_count = soup.find("li", class_ ="css-18k4nsw").text.strip()
@@ -47,7 +47,7 @@ for job_category in wuzzuf_job_categories:
     # loop over all jobs in all pages
     for index in range(count):
         index = str(index)
-        url = f"https://wuzzuf.net/search/jobs/?q={parse_job_category}&start={index}"
+        url = #f"https://jobPosting.net/search/jobs/?q={parse_job_category}&start={index}"
         #get page content
         response = requests.get(url)
         soup = bs(response.content,'html.parser')
@@ -91,7 +91,7 @@ for job_category in wuzzuf_job_categories:
     # check if files exists before and prevent adding duplicates
     df = pd.DataFrame({'job_titles':job_titles,'jobs_link':jobs_link,'companies':companies,'companies_links':companies_links,'locations':locations,'jobs_type':jobs_type,'Career_Level':Career_Level,'skills_list':skills_list,'workplaces':workplaces})
 
-    file_path=f"C:/Users/Asus/Documents/codeandprojects/wuzzuf_scraping/Wuzzuf_data/{job_category}_jobs.csv"
+    file_path=f"C:/Documents/jobPosting_scraping/jobPosting_data/{job_category}_jobs.csv"
 
     if not os.path.exists(file_path):
         df.to_csv(file_path,index=False,encoding='utf-8-sig')
